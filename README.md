@@ -1,35 +1,9 @@
 
 
-<h1 align="center"> <p>Can MLLMs Perform Multimodal In-Context Learning for Text-to-Image Generation?</p></h1>
-<h4 align="center">
-    <p>
-      <a href="https://yzeng58.github.io/zyc_cv/" target="_blank">Yuchen Zeng</a><sup>*1</sup>, <a href="https://scholar.google.com/citations?user=Q-ARWkwAAAAJ&hl=eh" target="_blank">Wonjun Kang</a><sup>*2</sup>, <a href="https://bryce-chen.github.io/" target="_blank">Yicong Chen</a><sup>1</sup>, <a href="http://cvml.ajou.ac.kr/wiki/index.php/Professor" target="_blank">Hyung Il Koo</a><sup>2</sup>, <a href="https://kangwooklee.com/aboutme/" target="_blank">Kangwook Lee</a><sup>1</sup>
-  </p>
-  <p>
-    <sup>1</sup>UW-Madison, <sup>2</sup> FuriosaAI
-   </p>
-    </h4>
-<p align="center">
-    <a href="https://github.com/UW-Madison-Lee-Lab/CoBSAT/releases">
-        <img alt="GitHub release" src="https://img.shields.io/github/release/UW-Madison-Lee-Lab/CoBSAT.svg">
-    </a>
-    <a href="https://arxiv.org/abs/2402.01293">
-        <img alt="GitHub release" src="https://img.shields.io/badge/arXiv-2402.01293-b31b1b.svg">
-    </a>
-    <a href="https://huggingface.co/datasets/yzeng58/CoBSAT">
-        <img alt="Hugging Face" src="https://img.shields.io/badge/dataset-CoBSAT-orange">
-    </a>
-</p>
+<h1 align="center"> <p>Enhance Multimodal In-Context Learning for Text-to-Image Generation</p></h1>
 
-**Abstract**: The evolution from Large Language Models (LLMs) to Multimodal Large Language Models (MLLMs) has spurred research into extending In-Context Learning (ICL) to its multimodal counterpart. Existing such studies have primarily concentrated on image-to-text ICL. However, the Text-to-Image ICL (T2I-ICL), with its unique characteristics and potential applications, remains underexplored. To address this gap, we formally define the task of T2I-ICL and present CoBSAT, the first T2I-ICL benchmark dataset, encompassing ten tasks. Utilizing our dataset to benchmark six state-of-the-art MLLMs, we uncover considerable difficulties MLLMs encounter in solving T2I-ICL. We identify the primary challenges as the inherent complexity of multimodality and image generation. To overcome these challenges, we explore strategies like fine-tuning and Chain-of-Thought prompting, demonstrating notable improvements. Our code and dataset are available at <a href="https://github.com/UW-Madison-Lee-Lab/CoBSAT">this link</a>.
+This final project is based on this github project: https://github.com/UW-Madison-Lee-Lab/CoBSAT. 
 
-<img width="903" alt="image" src="imgs/t2i_icl.jpg">
-
-# News  🚀
-
-* [07/10/24] Our paper is accepted by [COLM 2024](https://openreview.net/pdf?id=jt0R50d5nk)!
-* [02/29/24] Our dataset is available on 🤗[huggingface](https://huggingface.co/datasets/yzeng58/CoBSAT)!
-* [02/02/24] Our paper is available on <a href="https://arxiv.org/abs/2402.01293">arxiv</a>! 
 
 # Contents
 
@@ -52,14 +26,14 @@ To set up the environment for benchmarking MLLMs, please follow the following st
 1. Clone this repository and rename it as `cobsat`
 
    ```bash
-   git clone --recurse-submodules https://github.com/UW-Madison-Lee-Lab/CoBSAT
+   git clone --recurse-submodules https://github.com/LexiYin-mh/T2I-ICL-Low-Semantic
    mv CoBSAT cobsat
    cd cobsat
    ```
 
 2. Install Packages 
 
-   <details><summary> Linux </summary>
+  **Linux**
 
    ```bash
    # create the environment that works for most of the cases
@@ -82,16 +56,6 @@ To set up the environment for benchmarking MLLMs, please follow the following st
    conda env create -f conda_env/llava16.yml
    ```
 
-   </details>
-
-   <details><summary> Mac </summary>
-   TBA
-   </details>
-
-   <details><summary> Windows </summary>
-   TBA
-   </details>
-
 3. Create `environment.py` in the `cobsat` directory. Note that many variables need you to config except `root_dir` on your own
 
    ```python
@@ -105,38 +69,14 @@ To set up the environment for benchmarking MLLMs, please follow the following st
    ###############
    # NEED UPDATE #
    ###############
-   TRANSFORMER_CACHE = '/data/yzeng58/.cache/huggingface/hub' 
+   TRANSFORMER_CACHE = '/data/.cache/huggingface/hub' 
    
-   #########################
-   # NEED UPDATE IF NEEDED #
-   #########################
-   # GPT-4V
-   OPENAI_API_KEY = { 
-     'key1': f'{your_openai_key_1}',
-     'key2': f'{your_openai_key_2}',
-   }
-   # Gemini
-   GEMINI_API_KEY = {
-     'key1': f'{your_gemini_key_1}',
-     'key2': f'{your_gemini_key_2}',
-   }
-   # Claude
-   CLAUDE_API_KEY = {
-     'key1': f'{your_claude_key_1}',
-     'key2': f'{your_claude_key_2}',
-   }
-   # Emu for Image Generation
-   EMU_IMAGE_PATH = '/data/yzeng58/cobsat/models/Emu/Emu1/model_weights/Emu/pretrain' 
-   # Emu-Instruct
-   EMU_INSTRUCT_PATH = '/data/yzeng58/cobsat/models/Emu/Emu1/model_weights/Emu/Emu-instruct.pt' 
-   # Emu-Generation
-   EMU_TEXT_PATH = '/data/yzeng58/cobsat/models/Emu/Emu1/model_weights/Emu/Emu-pretrain.pt'
    # WANDB Logging https://wandb.ai/site
-   WANDB_ENTITY = 'lee-lab-uw-madison'
-   WANDB_PROJECT = 'cobsat'
+   WANDB_ENTITY = 'your-wandb-entity'
+   WANDB_PROJECT = 'your-wandb-project'
    ```
 
-# Step 2: Download Dataset
+# Step 2: Download Dataset and Model Weights
 
 <img width="903" alt="image" src="imgs/dataset_overview.jpg">
 
@@ -185,9 +125,11 @@ Up to now, the structure of your `cobsat` folder should look like this.
 └── ...
 ```
 
-# Step 3: Select MLLMs
+# Step 3: Set up MLLM (SEED-LLaMA)
 
-We have implemented several state-of-the-art models for your convenience. Additionally, we offer guidelines for integrating your own MLLMs. 
+3. Follow the instruction in [SEED-LLaMA](https://github.com/AILab-CVC/SEED), install model weights. 
+
+Besides, this repository also allow testing for other MLLMS listed on the directory below. 
 
 ## Supported Models
 
@@ -218,194 +160,12 @@ We have implemented several state-of-the-art models for your convenience. Additi
 * [x] [Claude](https://www.anthropic.com/claude)
   * Text Generation
 
-## Feature Your Own Model
-
-Throughout this section, the placeholder "OwnModel" can be substituted with the name of your specific model, such as "gpt4v".
-
-1. Create your own model folder `OwnModel/` in `models/` if needed. Check [this](https://github.com/UW-Madison-Lee-Lab/CoBSAT/tree/master/models) for examples.
-
-2. Create python file `call_OwnModel.py` in `load_models/` to load your own model.
-
-   <details><summary> <code>call_OwnModel.py</code> template </summary>
-    Your `call_OwnModel.py` script should include at least the following essential functions:
-
-     - **`load_OwnModel`**: Utilized for loading the model to avoid repeated loading during inference or fine-tuning. In certain cases, this function may not be necessary. For example, OpenAI provides API access for GPT-4V, enabling inference without the need to explicitly load the model.
-     - **`call_OwnModel`**: Employs the model to perform inference tasks.
-
-
-   ```python
-   # Template
-   def load_OwnModel(
-       device = 'cuda',
-       seed = 123,
-   ):
-   		...
-       return model, others
-   ```
-
-   You have the flexibility to define the input parameters and the format of the return values according to your needs.
-
-   ```python
-   # Template
-   def call_OwnModel(
-       text_inputs = ["Angry", "Cry", "Fly"],
-       image_inputs = [
-           "datasets/action_dog/angry_dog.jpg",
-           "datasets/action_dog/cry_dog.jpg",
-       ],
-       seed = 123,
-       gen_mode = 'text',
-     	instruction = [
-           "I will provide you with a few examples with text and images. Complete the example with the description of the next image. The description should be clear with main object, and include details such as color, texture, background, style, and action, if applicable. Tell me only the text prompt and I'll use your entire answer as a direct input to A Dalle-3. Never say other explanations. ",
-           '',
-       ],
-     	call_mode = 'micl',
-     	history = None,
-     	save_history = False,
-     	...
-   ):
-   		pass
-       return output_dict
-   ```
-
-   * Necessary parameters for function `call_OwnModel`
-
-     Below are the essential parameters required for configuring the model's operation.
-
-     - **`call_mode`**: Specifies the operation mode with two options:
-       - `micl`: Conducts text-to-image in-context learning (Multimodal In-Context Learning), combining `text_inputs` with `image_inputs` for model invocation.
-       - `text`: Focuses solely on `text_inputs`, concatenating them for text-based processing.
-     - **`text_inputs`**: A list of textual inputs used for demonstration and queries. Under `micl` mode, all but the last `text_inputs` are paired with `image_inputs` for in-context demonstrations. The final item is used as the textual query for model predictions.
-     - **`image_inputs`**: A list of image inputs corresponding to `text_inputs` for multimodal demonstrations.
-     - **`seed`**: An integer that sets the random seed, ensuring reproducibility of results.
-     - **`gen_mode`**: Determines the type of output generated by the model:
-       - `text`: Generates textual output.
-       - `image`: Generate image output.
-     - **`instruction`**: A list containing two strings designed to frame the prompt, with the first string placed at the beginning and the second at the end.
-     - **`history`**: Tracks the history of previous prompts and model responses, aiding in multi-step reasoning. This parameter is optional (`None` by default). If utilized, the history should be integrated into new prompts.
-     - **`save_history`**: Indicates whether to save the interaction history. This feature supports analyzing the model's learning and response patterns over time.
-
-     Additional parameters may be used for customized usage. 
-
-   * Return values for function `call_OwnModel`
-
-     The function returns a dictionary comprising the following keys.
-
-     - **`description`**: Contains the generated textual output as a string.
-     - **`image`**: Holds the generated image output. This key is populated only when `gen_mode` is set to `image`.
-     - **`history`**: If the `history` argument of the function is set to `True`, this key stores the interaction history, including both prompts and responses.
-
-     Additional content may be stored in custom keys to suit specialized requirements.
-
-   Check [`call_seed.py`](https://github.com/UW-Madison-Lee-Lab/CoBSAT/blob/master/load_models/call_seed.py#L106C5-L106C14) or other files in [`load_models/`](https://github.com/UW-Madison-Lee-Lab/CoBSAT/tree/master/load_models) for concrete examples. 
-
-   </details>
-
-3. Add your own model in [`load_model.py`](https://github.com/UW-Madison-Lee-Lab/CoBSAT/blob/master/load_model.py).
-
-   <details><summary> <code>load_model.py</code> template </summary>
-
-   ```python
-       elif model == 'OwnModel':
-           from load_models.call_OwnModel import load_OwnModel, call_OwnModel
-   				... 
-           return lambda configs: call_OwnModel(
-               model, 
-               others, 
-               gen_mode = gen_mode, 
-               **configs
-           )
-   ```
-
-   You can check our implementation for other models for example. For your own model, typically you need to load the model first, and then use `call_OwnModel` to make the infernece. You may want to fix some parameters which are not related to the prompts such as `model` or `tokenizer` in [this example](https://github.com/UW-Madison-Lee-Lab/CoBSAT/blob/master/load_model.py#L87). Here is one example usage:
-
-   ```python
-   >>> from load_model import load_model
-   >>> call_model = load_model('qwen')
-   
-   The model is automatically converting to bf16 for faster inference. If you want to disable the automatic precision, please manually add bf16/fp16/fp32=True to "AutoModelForCausalLM.from_pretrained".
-   Loading checkpoint shards: 100%|██████████| 10/10 [00:12<00:00,  1.21s/it]
-   
-   >>> call_model({
-       'text_inputs': ["Red", "Green", 'Yellow'],
-       'image_inputs': [
-           "/data/yzeng58/micl/datasets/color_bag/red_bag.jpg",
-           "/data/yzeng58/micl/datasets/color_bag/green_bag.jpg",
-       ],
-       'seed': 123,
-   })
-      
-   {'description': 'The next image should be a yellow school bus on a white background, with the words "The Ultimate School Bus" in black font and "For all your school needs" in yellow font on the front. The bus should be a 3D model and the background should be a white field.',
-    'time': 2.4913034439086914}
-   ```
-
-   </details>
-
-4. Add your model to `supported_models` in `configs.py`.
-
-   ```python
-   supported_models = [
-       'qwen', 
-       'llava', 
-       'llava16',
-       'gpt4v', 
-       'emu2', 
-       'emu', 
-       'seed',
-       'gill',
-       'gemini',
-       'claude',
-       'OwnModel', # your own model
-   ]
-   ```
-
-5. Config the default instruction of your model by updating `instruction_dict` in [`configs.py`](https://github.com/UW-Madison-Lee-Lab/CoBSAT/blob/master/configs.py).
-
-   Especially, you need to edit the `instruction_dict['default']`.
-
-   If your model support image generation, then you need to edit `instruction_dict['default']['image']` .
-
-   ```python
-   'image': {
-       'gill': (
-           'You are a professional assistant can generate a new image based on the seqeunce. ',
-           '',
-       ),
-       ...
-       # NEED UPDATE
-       'OwnModel': (
-           'Based on the sequence, generate the next image.',
-           'Make the prediction now.'
-       )
-   }
-   ```
-
-   If your model support text generation, then you need to edit `instruction_dict['default']['text']` .
-
-   ```python
-   'text': {
-       'seed': (
-           "I will provide you a few examples with text and image. Complete the example with the description of next image. Tell me only the text prompt and I'll use your entire answer as a direct input to A Dalle-3. Never say other explanations. ",
-           '',
-       ),
-       ...
-       # NEED UPDATE
-       'OwnModel': (
-           'Based on the sequence, describe the next image clearly, including details such as the main object, color, texture, background, action, style, if applicable. ',
-           'Make the prediction now.'
-       )
-   }
-   ```
-
-6. [Optional: If you want to finetune your model on our dataset] Update [`finetune_icl.py`](https://github.com/UW-Madison-Lee-Lab/CoBSAT/blob/master/finetune_icl.py)
-
-   Please refer to the current example of fine-tuning Qwen-VL in [here](https://github.com/UW-Madison-Lee-Lab/CoBSAT/blob/master/finetune_icl.py#L39).
 
 # Step 4: Benchmark MLLMs
 
 <img width="700" alt="image" src="imgs/benchmark_pipeline.jpg">
 
-## [Optional] Fine-Tuning Stage
+## Fine-Tuning Stage
 
 ```bash
 # Example
@@ -448,11 +208,7 @@ The fine-tuned models will be stored in `ft_models/`.
 ## Inference Stage
 
 ```bash
-# Example
-
-# activate the default environment
-# if the model is LLaVA, replace `micl` with `llava`
-conda activate micl
+conda activate cobsat
 
 python inference_icl.py \
 --model seed \
@@ -468,6 +224,7 @@ python inference_icl.py \
 --eval_mllm llava \
 --ft_mode all \
 --eval_task_theme ''
+--low_semantic 0
 ```
 
 <details><summary> Parameter Descriptions </summary>
@@ -495,6 +252,7 @@ python inference_icl.py \
   * `all`: fine-tune on subsets of all tasks
   * `leave_one_out`: fine-tune on entire set of other four themed-tasks
 - **`eval_task_theme`**: The theme will be evaluated on (the theme that is excludede in fine-tuning). Default is empty string `''`. Only use it when `ft_mode` set to be `leave_one_out`.
+- **`low_semantic`**: Indicates whether to use low-semantic input for testing ICL ability of the model. 
 
 </details>
 
@@ -552,7 +310,7 @@ python evaluation_icl.py \
 
 The evaluation results will be stored in `results/evals/` by default or `results/ft` if `finetuned_model` is set to `True`. If `wandb` is `True`, you can also view the evaluation results in your wandb board. 
 
-# Step 5: Cite Us
+# Reference
 
 ```tex
 @article{zeng2024can,
