@@ -411,6 +411,7 @@ def eval(
     eval_mllm = 'llava', # ['llava', 'gemini']
     ft_mode = 'all', # ['all', 'leave_one_out']
     eval_task_theme = '', # color, background, style, action, texture 
+    low_semantic = False,
 ):
     if finetuned_model and data_mode != 'ft_test':
         raise ValueError(f"finetuned models only supports loading ft_test data. You are considering {data_mode} data.")
@@ -437,18 +438,33 @@ def eval(
             'obj': 'theta', 'detail': 'x',
         }
     
-    csv_file_path = get_summary_path(
-        finetuned_model,
-        model,
-        eval_mode, 
-        shot,
-        prompt_type,
-        task_id,
-        data_mode,
-        eval_mllm,
-        ft_mode,
-        eval_task_theme,
-    )
+    if low_semantic:
+        true_shot = shot * 2
+        csv_file_path = get_summary_path(
+            finetuned_model,
+            model,
+            eval_mode, 
+            true_shot,
+            prompt_type,
+            task_id,
+            data_mode,
+            eval_mllm,
+            ft_mode,
+            eval_task_theme,
+        )
+    else:
+        csv_file_path = get_summary_path(
+            finetuned_model,
+            model,
+            eval_mode, 
+            shot,
+            prompt_type,
+            task_id,
+            data_mode,
+            eval_mllm,
+            ft_mode,
+            eval_task_theme,
+        )
         
     existing_csv = None
     if os.path.exists(csv_file_path) and (not overwrite): existing_csv = pd.read_csv(csv_file_path)
@@ -506,17 +522,30 @@ def eval(
         task_id,
         data_mode = data_mode,
     )
-    
-    base_path = get_result_path(
-        finetuned_model, 
-        data_mode,
-        model,
-        eval_mode,
-        shot,
-        prompt_type,
-        ft_mode,
-        eval_task_theme,
-    )
+
+    if low_semantic:
+        true_shot = shot * 2
+        base_path = get_result_path(
+            finetuned_model, 
+            data_mode,
+            model,
+            eval_mode,
+            true_shot,
+            prompt_type,
+            ft_mode,
+            eval_task_theme,
+        )
+    else:
+        base_path = get_result_path(
+            finetuned_model, 
+            data_mode,
+            model,
+            eval_mode,
+            shot,
+            prompt_type,
+            ft_mode,
+            eval_task_theme,
+        )
     
     folder_path = f"{base_path}/task_{task_id}"
     if not os.path.exists(folder_path):
@@ -656,6 +685,7 @@ if '__main__' == __name__:
     parser.add_argument('--api_key', type = str, default = 'yz', help = 'api key for gemini')
     parser.add_argument('--ft_mode', type = str, default = 'all', choices = ['all', 'leave_one_out'], help = 'finetune mode')
     parser.add_argument('--eval_task_theme', type = str, default = '', help = 'task theme for evaluation')
+    parser.add_argument('--low_semantic', type = int, default = 0, help = 'whether we are evaluating low semantic inference results', choices = [0,1])
     
     args = parser.parse_args()
     
@@ -704,9 +734,13 @@ if '__main__' == __name__:
         'clip_processor': clip_processor,
         'clip_model': clip_model,
     }
+
+    low_semantic = True if args.low_semantic == 1 else 0
     
     for task_id in args.task_id:
         for shot in args.shot:
+            if low_semantic:
+                shot = int(shot // 2)
             for prompt_type in args.prompt_type:
                 eval(
                     task_id,
@@ -724,4 +758,5 @@ if '__main__' == __name__:
                     eval_mllm = args.eval_mllm,
                     ft_mode = args.ft_mode,
                     eval_task_theme = args.eval_task_theme,
+                    low_semantic = low_semantic,
                 )

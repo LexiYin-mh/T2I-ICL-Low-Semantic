@@ -96,17 +96,30 @@ def inference(
     if (ft_mode == 'leave_one_out'):
         if task_dataframe[task_id]['task_name'].split('-')[0].lower() != eval_task_theme:
             return None
-        
-    base_path = get_result_path(
-        finetuned_model,
-        data_mode,
-        model,
-        gen_mode,
-        shot,
-        prompt_type,
-        ft_mode,
-        eval_task_theme,
-    )
+    
+    if low_semantic:
+        true_shot = shot * 2
+        base_path = get_result_path(
+            finetuned_model,
+            data_mode,
+            model,
+            gen_mode,
+            true_shot,
+            prompt_type,
+            ft_mode,
+            eval_task_theme,
+        )
+    else:
+        base_path = get_result_path(
+            finetuned_model,
+            data_mode,
+            model,
+            gen_mode,
+            shot,
+            prompt_type,
+            ft_mode,
+            eval_task_theme,
+        )
     
     folder_path = f"{base_path}/task_{task_id}"
     if not os.path.exists(folder_path):
