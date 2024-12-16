@@ -8,16 +8,15 @@ This final project is based on this github project: https://github.com/UW-Madiso
 # Contents
 
 - [Step 1: Set Up Environment](#step-1-set-up-environment)
-- [Step 2: Download Dataset](#step-2-download-dataset)
-- [Step 3: Select MLLMs](#step-3-select-mllms)
+- [Step 2: Download Dataset and Model Weights](#step-2-download-dataset-and-model-weights)
+- [Step 3: Set up MLLMs](#step-3-set-up-seed-llama)
   - [Supported Models](#supported-models)
-  - [Feature Your Own Model](#feature-your-own-model)
 
 - [Step 4: Benchmark MLLMs](#step-4-benchmark-mllms)
-  - [[Optional] Fine-Tuning Stage](#optional-fine-tuning-stage)
+  - [Fine-Tuning Stage](#fine-tuning-stage)
   - [Inference Stage](#inference-stage)
   - [Evaluation Stage](#evaluation-stage)
-- [Step 5: Cite Us](#step-5-cite-us)
+- [Reference](#reference)
 
 # Step 1: Set Up Environment
 
@@ -125,7 +124,7 @@ Up to now, the structure of your `cobsat` folder should look like this.
 └── ...
 ```
 
-# Step 3: Set up MLLM (SEED-LLaMA)
+# Step 3: Set up SEED-LLaMA
 
 3. Follow the instruction in [SEED-LLaMA](https://github.com/AILab-CVC/SEED), install model weights. 
 
@@ -162,8 +161,6 @@ Besides, this repository also allow testing for other MLLMS listed on the direct
 
 
 # Step 4: Benchmark MLLMs
-
-<img width="700" alt="image" src="imgs/benchmark_pipeline.jpg">
 
 ## Fine-Tuning Stage
 
