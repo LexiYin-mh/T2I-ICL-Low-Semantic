@@ -197,7 +197,7 @@ The following image shows the scenario when running the baseline model.
 conda activate cobsat
 
 python finetune_icl.py \
---model qwen \
+--model seed \
 --shot 2 \ 							
 --prompt_type default \
 --gen_mode text \
@@ -228,15 +228,15 @@ python inference_icl.py \
 --model seed \
 --prompt_type default \
 --gen_mode image \
---shot 2 4 \    # change the amount of shots
+--shot 2 \    # change the amount of shots
 --seed 123 \
 --device cuda \
 --task_id 1 2 3 \  # change task id for testing more tasks (total 10)
 --overwrite 0 \
 --finetuned_model 0 \
 --data_mode default \
---ft_mode all \
---eval_task_theme '' \
+--ft_mode leave_one_out \
+--eval_task_theme color \ # change task theme if required
 --low_semantic 0 # change it to be 1 if you are testing task 2
 ```
 
@@ -343,7 +343,7 @@ python inference_icl.py \
 --finetuned_model 1 \
 --data_mode default \
 --ft_mode all \
---eval_task_theme color \ # change task theme if required
+--eval_task_theme '' \
 --low_semantic 1 # change it to be 1 if you are testing task 2
 ```
 
