@@ -160,7 +160,6 @@ python inference_icl.py \
 - **`shot`**: Defines the number of demonstration examples included in each training prompt.
 - **`prompt_type`**: Selects the type of prompt to use. Available options include:
   * `default`: The standard prompt design as described in our paper.
-  * `cot` (Chain of Thought): Incorporates multi-step inference prompts, prompting the model to generate reasoning steps ("let's think step by step") before the final output.
 - **`gen_mode`**: Determines the output mode of the model, with two options:
   * `image`: The model generates an image output.
   * `text`: The model generates textual descriptions for the next image.
@@ -178,7 +177,19 @@ python inference_icl.py \
 
 The generated outputs will be stored in `results/exps/` by default or `results/ft` if `finetuned_model` is set to `True`.
 
-## Fine-Tuning Stage
+**Screenshots**
+The following image shows the scenario when running the baseline model.
+![image](https://github.com/user-attachments/assets/726463ba-3955-4e13-bb44-fc114e4b9dc8)
+
+![image](https://github.com/user-attachments/assets/a7871a95-b030-47a8-990b-389d1c9302ef)
+
+![image](https://github.com/user-attachments/assets/f756e42f-fcc4-4c85-996a-0dcd3e3fc144)
+
+
+
+## Fine-tuning model using CoT augmented dataset
+
+### Fine-tuning Stage
 
 ```bash
 conda activate cobsat
@@ -197,12 +208,7 @@ python finetune_icl.py \
   - **`model`**: Specifies the model for fine-tuning. 
   - **`shot`**: Defines the number of demonstration examples included in each training prompt.
   - **`prompt_type`**: Selects the type of prompt to use. Available options include:
-    - `default`: The standard prompt design as described in our paper.
-    - `misleading`: Introduces misleading information in the textual input of each demonstration, as detailed in the appendix.
-    - `cot` (Chain of Thought): Incorporates multi-step inference prompts, prompting the model to generate reasoning steps ("let's think step by step") before the final output.
-    - `exact`: Directly provides the ground truth label as the textual input.
-    - `caption`: Replaces images in the prompt with their corresponding captions.
-    - `instruct`: Adds an additional sentence explicitly stating the relationship between textual input and visual output in each demonstration.
+    - `default`: The standard prompt design as described in our paper. Currently only supports 'default' type since it's designed for CoT fine-tuning.
   - **`gen_mode`**: Determines the output mode of the model, with two options:
     - `image`: The model generates an image output.
   - **`ft_mode`**: The fine-tuning mode used in the experiment, with two options:
@@ -210,8 +216,53 @@ python finetune_icl.py \
     - `leave_one_out`: fine-tune on entire set of other four themed-tasks
   - **`eval_task_theme`**: The theme will be evaluated on (the theme that is excludede in fine-tuning). Default is empty string `''`. Only use it when `ft_mode` set to be `leave_one_out`.
 
-
 The checkpoints of fine-tuned models will be stored in `ft_models/`.
+
+### Inference using Fine-tuned Model
+```bash
+conda activate cobsat
+
+python inference_icl.py \
+--model seed \
+--prompt_type default \
+--gen_mode image \
+--shot 2 4 \    # change the amount of shots
+--seed 123 \
+--device cuda \
+--task_id 1 2 3 \  # change task id for testing more tasks (total 10)
+--overwrite 0 \
+--finetuned_model 0 \
+--data_mode default \
+--ft_mode all \
+--eval_task_theme '' \
+--low_semantic 0 # change it to be 1 if you are testing task 2
+```
+
+**Parameter Descriptions**
+
+- **`model`**: Specifies the model for making the inference.
+- **`shot`**: Defines the number of demonstration examples included in each training prompt.
+- **`prompt_type`**: Selects the type of prompt to use. Available options include:
+  * `default`: The standard prompt design as described in our paper.
+- **`gen_mode`**: Determines the output mode of the model, with two options:
+  * `image`: The model generates an image output.
+  * `text`: The model generates textual descriptions for the next image.
+- **`seed`**: An integer used to set the random seed for reproducibility.
+- **`device`**: Specifies the computing device for the experiments. The default value is `cuda`, which utilizes a single GPU.
+- **`task_id`**: Identifies the task being performed. By default, all ten tasks are executed. Detailed information about each task can be found in `configs.py` under the definition of `task_dataframe`, as well as in our paper.
+- **`overwrite`**: Determines whether to reuse existing results or overwrite them. This is applicable when results have already been saved.
+- **`finetuned_model`**: Indicates whether to use a finetuned model. If enabled, the finetuned model must be stored beforehand by executing `finetune_icl.py`, and the `data_mode` should be set to `ft_test`. 
+- **`data_mode`**: Offers two options: `default` and `ft_test`. In `ft_test` mode, the dataset is divided into training and testing sets, with only the testing set being utilized.
+- **`ft_mode`**: The fine-tuning mode used in the experiment, with two options:
+  * `all`: fine-tune on subsets of all tasks
+  * `leave_one_out`: fine-tune on entire set of other four themed-tasks
+- **`eval_task_theme`**: The theme will be evaluated on (the theme that is excludede in fine-tuning). Default is empty string `''`. Only use it when `ft_mode` set to be `leave_one_out`.
+- **`low_semantic`**: Indicates whether to use low-semantic input for testing ICL ability of the model. 
+
+The generated outputs will be stored in `results/exps/` by default or `results/ft` if `finetuned_model` is set to `True`.
+
+
+
 
 ## Evaluation Stage
 
@@ -262,6 +313,57 @@ python evaluation_icl.py \
 
 
 The evaluation results will be stored in `results/evals/` by default or `results/ft` if `finetuned_model` is set to `True`. If `wandb` is `True`, you can also view the evaluation results in your wandb board. 
+
+**Screenshots**
+The following image shows the scenario when running the fine-tuned model.
+<img width="1477" alt="image" src="https://github.com/user-attachments/assets/8cd9e67b-8e18-4e0b-8a49-6c4cb63fa267" />
+
+
+
+# Step 5: Task 2 - Structured Reasoning with Low-Semantic Inputs
+
+## Low-Semantic Task Inference
+
+```bash
+conda activate cobsat
+
+python inference_icl.py \
+--model seed \
+--prompt_type default \
+--gen_mode image \
+--shot 2 \  
+--seed 123 \
+--device cuda \
+--task_id 1 2 3 \  # change task id for testing more tasks (total 10)
+--overwrite 0 \
+--finetuned_model 1 \
+--data_mode default \
+--ft_mode all \
+--eval_task_theme color \ # change task theme if required
+--low_semantic 1 # change it to be 1 if you are testing task 2
+```
+
+**Parameter Descriptions**
+
+  - **`model`**: Specifies the model for fine-tuning. 
+  - **`shot`**: Defines the number of demonstration examples included in each training prompt.
+  - **`prompt_type`**: Selects the type of prompt to use. Available options include:
+    - `default`: The standard prompt design as described in our paper. Currently only supports 'default' type since it's designed for CoT fine-tuning.
+  - **`gen_mode`**: Determines the output mode of the model, with two options:
+    - `image`: The model generates an image output.
+  - **`ft_mode`**: The fine-tuning mode used in the experiment, with two options:
+    - `all`: fine-tune on subsets of all tasks
+    - `leave_one_out`: fine-tune on entire set of other four themed-tasks
+  - **`eval_task_theme`**: The theme will be evaluated on (the theme that is excludede in fine-tuning). Default is empty string `''`. Only use it when `ft_mode` set to be `leave_one_out`.
+
+
+The checkpoints of fine-tuned models will be stored in `ft_models/`.
+
+
+**Screenshots**
+![image](https://github.com/user-attachments/assets/781544d1-4128-4278-8037-3326441db1bc)
+![image](https://github.com/user-attachments/assets/b378e925-e223-48b8-99aa-a56529aaaff7)
+
 
 ## Challenges and Fixes
 
