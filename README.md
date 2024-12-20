@@ -267,6 +267,30 @@ python inference_icl.py \
 
 The generated outputs will be stored in `results/exps/` by default or `results/ft` if `finetuned_model` is set to `True`.
 
+
+**File Structure**
+
+
+After finishing execution for fine-tuning stage, the file tree should be something similar to the following one:
+```
+ft_models/
+└── seed_image_shot_2_default_ft_mode_leave_one_out_color/
+    ├── README.md
+    ├── adapter_config.json
+    ├── adapter_model.safetensors
+    ├── added_tokens.json
+    ├── checkpoint-1000/
+    ├── checkpoint-2000/
+    ├── checkpoint-3000/
+    ├── checkpoint-4000/
+    ├── checkpoint-5000/
+    ├── special_tokens_map.json
+    ├── tokenizer.model
+    ├── tokenizer_config.json
+    ├── trainer_state.json
+    └── training_args.bin
+```
+
 **Screenshots**
 
 
