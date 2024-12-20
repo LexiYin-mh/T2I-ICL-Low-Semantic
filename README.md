@@ -20,6 +20,7 @@ This final project is based on this github project: https://github.com/UW-Madiso
   - [Note](#note)
 - [Step 5: Task 2 - Structured Reasoning with Low-Semantic Inputs](#step-5-task-2---structured-reasoning-with-low-semantic-inputs)
   - [Low-Semantic Task Inference](#low-semantic-task-inference)
+  - [Task 2 Evaluation Stage](#task-2-evaluation-stage)
 - [Challenges and Fixes](#challenges-and-fixes)
 - [Reference](#reference)
 
