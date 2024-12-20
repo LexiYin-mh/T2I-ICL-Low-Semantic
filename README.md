@@ -72,10 +72,6 @@ To set up the environment for benchmarking MLLMs, please follow the following st
 
 # Step 2: Download Dataset and Model Weights
 
-<img width="903" alt="image" src="imgs/dataset_overview.jpg">
-
-To use our dataset, please follow the following steps. 
-
 1. Download the images and their corresponding descriptions of our dataset.
 
    ```bash
