@@ -335,7 +335,7 @@ python inference_icl.py \
 --model seed \
 --prompt_type default \
 --gen_mode image \
---shot 2 \  
+--shot 4 \ # task2-lowsemantic only support 4-shot, 8-shot, 12-shot, 16-shot
 --seed 123 \
 --device cuda \
 --task_id 1 2 3 \  # change task id for testing more tasks (total 10)
@@ -365,6 +365,9 @@ The checkpoints of fine-tuned models will be stored in `ft_models/`.
 
 
 **Screenshots**
+
+
+The following image shows the scenario when running the fine-tuned model.
 
 
 ![image](https://github.com/user-attachments/assets/781544d1-4128-4278-8037-3326441db1bc)
