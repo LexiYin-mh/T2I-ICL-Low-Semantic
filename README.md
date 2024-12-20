@@ -190,7 +190,7 @@ The following image shows the scenario when running the baseline model.
 
 ![image](https://github.com/user-attachments/assets/a7871a95-b030-47a8-990b-389d1c9302ef)
 
-![image](https://github.com/user-attachments/assets/f756e42f-fcc4-4c85-996a-0dcd3e3fc144)
+
 
 
 
@@ -297,7 +297,7 @@ ft_models/
 
 The following image shows the scenario when running the fine-tuned model.
 <img width="1477" alt="image" src="https://github.com/user-attachments/assets/8cd9e67b-8e18-4e0b-8a49-6c4cb63fa267" />
-
+![image](https://github.com/user-attachments/assets/f756e42f-fcc4-4c85-996a-0dcd3e3fc144)
 
 
 
