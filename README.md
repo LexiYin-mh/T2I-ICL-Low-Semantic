@@ -178,6 +178,8 @@ python inference_icl.py \
 The generated outputs will be stored in `results/exps/` by default or `results/ft` if `finetuned_model` is set to `True`.
 
 **Screenshots**
+
+
 The following image shows the scenario when running the baseline model.
 ![image](https://github.com/user-attachments/assets/726463ba-3955-4e13-bb44-fc114e4b9dc8)
 
@@ -315,6 +317,8 @@ python evaluation_icl.py \
 The evaluation results will be stored in `results/evals/` by default or `results/ft` if `finetuned_model` is set to `True`. If `wandb` is `True`, you can also view the evaluation results in your wandb board. 
 
 **Screenshots**
+
+
 The following image shows the scenario when running the fine-tuned model.
 <img width="1477" alt="image" src="https://github.com/user-attachments/assets/8cd9e67b-8e18-4e0b-8a49-6c4cb63fa267" />
 
@@ -361,6 +365,8 @@ The checkpoints of fine-tuned models will be stored in `ft_models/`.
 
 
 **Screenshots**
+
+
 ![image](https://github.com/user-attachments/assets/781544d1-4128-4278-8037-3326441db1bc)
 ![image](https://github.com/user-attachments/assets/b378e925-e223-48b8-99aa-a56529aaaff7)
 
