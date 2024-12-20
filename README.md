@@ -142,10 +142,10 @@ python inference_icl.py \
 --model seed \
 --prompt_type default \
 --gen_mode image \
---shot 2 4 \
+--shot 2 4 \    # change the amount of shots
 --seed 123 \
 --device cuda \
---task_id 1 2 3 \
+--task_id 1 2 3 \  # change task id for testing more tasks (total 10)
 --overwrite 0 \
 --finetuned_model 0 \
 --data_mode default \
@@ -162,9 +162,6 @@ python inference_icl.py \
 - **`prompt_type`**: Selects the type of prompt to use. Available options include:
   * `default`: The standard prompt design as described in our paper.
   * `cot` (Chain of Thought): Incorporates multi-step inference prompts, prompting the model to generate reasoning steps ("let's think step by step") before the final output.
-  * `exact`: Directly provides the ground truth label as the textual input.
-  * `caption`: Replaces images in the prompt with their corresponding captions.
-  * `instruct`: Adds an additional sentence explicitly stating the relationship between textual input and visual output in each demonstration.
 - **`gen_mode`**: Determines the output mode of the model, with two options:
   * `image`: The model generates an image output.
   * `text`: The model generates textual descriptions for the next image.
@@ -174,13 +171,11 @@ python inference_icl.py \
 - **`overwrite`**: Determines whether to reuse existing results or overwrite them. This is applicable when results have already been saved.
 - **`finetuned_model`**: Indicates whether to use a finetuned model. If enabled, the finetuned model must be stored beforehand by executing `finetune_icl.py`, and the `data_mode` should be set to `ft_test`. 
 - **`data_mode`**: Offers two options: `default` and `ft_test`. In `ft_test` mode, the dataset is divided into training and testing sets, with only the testing set being utilized.
-- **`api_key`**: Indicate which key to use. In `environment.py`, you should have already chose the name for your api_key for the model you are going to use.
 - **`ft_mode`**: The fine-tuning mode used in the experiment, with two options:
   * `all`: fine-tune on subsets of all tasks
   * `leave_one_out`: fine-tune on entire set of other four themed-tasks
 - **`eval_task_theme`**: The theme will be evaluated on (the theme that is excludede in fine-tuning). Default is empty string `''`. Only use it when `ft_mode` set to be `leave_one_out`.
 - **`low_semantic`**: Indicates whether to use low-semantic input for testing ICL ability of the model. 
-
 
 The generated outputs will be stored in `results/exps/` by default or `results/ft` if `finetuned_model` is set to `True`.
 
