@@ -149,7 +149,6 @@ python inference_icl.py \
 --overwrite 0 \
 --finetuned_model 0 \
 --data_mode default \
---eval_mllm llava \
 --ft_mode all \
 --eval_task_theme '' \
 --low_semantic 0 # change it to be 1 if you are testing task 2
