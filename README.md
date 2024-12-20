@@ -17,6 +17,7 @@ This final project is based on this github project: https://github.com/UW-Madiso
     - [Fine-tuning Stage](#fine-tuning-stage)
     - [Inference using Fine-tuned Model](#inference-using-fine-tuned-model) 
   - [Evaluation Stage](#evaluation-stage)
+  - [Note](#note)
 - [Step 5: Task 2 - Structured Reasoning with Low-Semantic Inputs](#step-5-task-2---structured-reasoning-with-low-semantic-inputs)
   - [Low-Semantic Task Inference](#low-semantic-task-inference)
 - [Challenges and Fixes](#challenges-and-fixes)
