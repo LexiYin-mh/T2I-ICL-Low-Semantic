@@ -319,6 +319,8 @@ python evaluation_icl.py \
 
 The evaluation results will be stored in `results/evals/` by default or `results/ft` if `finetuned_model` is set to `True`. If `wandb` is `True`, you can also view the evaluation results in your wandb board. 
 
+## Note
+After finishing all steps for task 1, please make sure to rename the result folder to a different name before running task 2 to ensure smooth execution.
 
 
 # Step 5: Task 2 - Structured Reasoning with Low-Semantic Inputs
@@ -337,7 +339,7 @@ python inference_icl.py \
 --device cuda \
 --task_id 1 2 3 \  # change task id for testing more tasks (total 10)
 --overwrite 0 \
---finetuned_model 1 \
+--finetuned_model 0 \
 --data_mode default \
 --ft_mode all \
 --eval_task_theme '' \
