@@ -9,13 +9,16 @@ This final project is based on this github project: https://github.com/UW-Madiso
 
 - [Step 1: Set Up Environment](#step-1-set-up-environment)
 - [Step 2: Download Dataset and Model Weights](#step-2-download-dataset-and-model-weights)
-- [Step 3: Set up MLLMs](#step-3-set-up-seed-llama)
+- [Step 3: Set up SEED-LLaMA](#step-3-set-up-seed-llama)
   - [Experimented Models](#experimented-models)
 
 - [Step 4: Task 1 Fine-Tuning with CoT Reasoning](#step-4-task-1-fine-tuning-with-cot-reasoning)
-  - [Fine-Tuning Stage](#fine-tuning-stage)
-  - [Inference Stage](#inference-stage)
+  - [Fine-tuning model using CoT augmented dataset](#fine-tuning-model-using-cot-augmented-dataset)
+    - [Fine-tuning Stage](#fine-tuning-stage)
+    - [Inference using Fine-tuned Model](#inference-using-fine-tuned-model) 
   - [Evaluation Stage](#evaluation-stage)
+- [Step 5: Task 2 - Structured Reasoning with Low-Semantic Inputs](#step-5-task-2-structured-reasoning-with-low-semantic-inputs)
+  - [Low-Semantic Task Inference](#low-semantic-task-inference)
 - [Challenges and Fixes](#challenges-and-fixes)
 - [Reference](#reference)
 
@@ -373,21 +376,6 @@ The following image shows the scenario when running the fine-tuned model.
 ![image](https://github.com/user-attachments/assets/781544d1-4128-4278-8037-3326441db1bc)
 ![image](https://github.com/user-attachments/assets/b378e925-e223-48b8-99aa-a56529aaaff7)
 
-
-## Challenges and Fixes
-
-During the replication of the CoBSAT project, we faced several challenges that hindered smooth execution. These included:
-
-* **Dependency Issues**: We faced recurring dependency problems while attempting to run the project on various virtual machines (VMs), including Google Colab and the Google Cloud VM without Deep Learning Image. The issues primarily stemmed from mismatches in package versions and missing libraries. Among the tested environments, the Google Colab Deep Learning VM was the most stable and compatible for running the project.
-
-* **GPU Limitations**: Our project required substantial GPU resources, as we were working with the SEED-LLaMA-14b model (and, as a fallback, SEED-LLaMA-8b). However, we had limited access to high-performance GPUs apart from the Nvidia T4, which struggles to load models larger than 7B parameters without additional optimizations such as quantization or model parallelism. To overcome this constraint, we transitioned to using the Lambda Labs VM service, which provided the necessary computational resources.
-
-* **Code Bugs in the Project Repository**: The original CoBSAT repository contained several bugs that further complicated the execution.
-    * Model Compatibility: Certain model configurations, such as GPT-4V, were not necessary for our experiments. To address this, we commented out irrelevant code to prevent execution errors.
-    * Tensor Shape Mismatches: Some parts of the code produced errors due to incorrect image tensor shapes, which caused downstream operations to fail. We resolved these issues by implementing tensor truncation and padding mechanisms.
-    * Unresolvable Low-Frequency Errors: Occasionally, errors occurred that we could not address due to their origins in lower-level library calls. These errors had a frequency of less than 1 in 1,000 cases. To mitigate their impact, we implemented a mechanism to skip problematic operations instead of halting the entire program.
-
-By addressing these challenges systematically, we ensured that the project could run effectively on our chosen infrastructure, enabling successful replication of the baseline experiments.
 
 # Challenges and Fixes
 
